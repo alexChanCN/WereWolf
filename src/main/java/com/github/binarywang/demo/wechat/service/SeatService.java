@@ -9,4 +9,6 @@ public interface SeatService extends CoreService<Seat,Integer>{
     Seat findByIds(Integer roomId, Integer seatNo);
     Integer changeStatus(Integer seatId ,Integer status);
     Integer changeStatus(Integer roomId, Integer seatNo ,Integer status);
+
+    //List<RoomStatus> getAllStatus(Date date, Integer phase);
 }

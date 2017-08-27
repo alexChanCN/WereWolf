@@ -2,8 +2,11 @@ package com.github.binarywang.demo.wechat.service;
 
 import com.github.binarywang.demo.wechat.domain.dto.FindSeatInfo;
 import com.github.binarywang.demo.wechat.domain.dto.ReserveInfo;
+import com.github.binarywang.demo.wechat.domain.dto.RoomRequest;
+import com.github.binarywang.demo.wechat.domain.dto.RoomStatus;
 import com.github.binarywang.demo.wechat.domain.model.OrderInfo;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -14,4 +17,5 @@ public interface OrderService extends CoreService<OrderInfo,Long>{
     Integer verify(Long id,String clerkName);
     List<Integer> findSeats(FindSeatInfo info);
     List<OrderInfo> findByOpenId(String openId);
+    List<OrderInfo> findByRequest(RoomRequest roomRequest);
 }

@@ -2,6 +2,8 @@ package com.github.binarywang.demo.wechat.service.impl;
 
 import com.github.binarywang.demo.wechat.domain.dto.FindSeatInfo;
 import com.github.binarywang.demo.wechat.domain.dto.ReserveInfo;
+import com.github.binarywang.demo.wechat.domain.dto.RoomRequest;
+import com.github.binarywang.demo.wechat.domain.dto.RoomStatus;
 import com.github.binarywang.demo.wechat.domain.model.Member;
 import com.github.binarywang.demo.wechat.domain.model.OrderInfo;
 import com.github.binarywang.demo.wechat.domain.model.Room;
@@ -162,4 +164,12 @@ public class OrderServiceImpl implements OrderService{
         Member member = memberService.findByOpenId(openId);
         return orderRepository.findByMember(member);
     }
+
+    @Override
+    public List<OrderInfo> findByRequest(RoomRequest roomRequest) {
+        Room room = RoomUtils.getInstance(roomRequest.getRoomId());
+        return orderRepository.findByDateAndRoomAndPhase(roomRequest.getDate(),room,roomRequest.getPhase());
+    }
+
+
 }

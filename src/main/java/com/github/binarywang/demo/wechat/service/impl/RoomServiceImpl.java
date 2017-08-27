@@ -1,13 +1,22 @@
 package com.github.binarywang.demo.wechat.service.impl;
 
+import com.github.binarywang.demo.wechat.domain.dto.FindSeatInfo;
+import com.github.binarywang.demo.wechat.domain.dto.RoomRequest;
+import com.github.binarywang.demo.wechat.domain.dto.RoomStatus;
+import com.github.binarywang.demo.wechat.domain.model.OrderInfo;
 import com.github.binarywang.demo.wechat.domain.model.Room;
+import com.github.binarywang.demo.wechat.repository.OrderRepository;
 import com.github.binarywang.demo.wechat.repository.RoomRepository;
+import com.github.binarywang.demo.wechat.service.OrderService;
 import com.github.binarywang.demo.wechat.service.RoomService;
 import com.github.binarywang.demo.wechat.service.SeatService;
+import com.github.binarywang.demo.wechat.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -21,6 +30,9 @@ public class RoomServiceImpl implements RoomService{
 
     @Autowired
     SeatService seatService;
+
+    @Autowired
+    OrderService orderService;
 
     @Override
     public Integer save(Room model) {
@@ -99,6 +111,20 @@ public class RoomServiceImpl implements RoomService{
         else
             return 0;
         return 1;
+    }
+
+    @Override
+    public List<RoomStatus> getAllStatus(Date date, Integer phase) {
+        List<RoomStatus> roomStatuses = new ArrayList<RoomStatus>();
+        for(int i = 1;i<3;i++){
+            RoomRequest roomRequest = new RoomRequest(date,i,phase);
+            List<OrderInfo> orderInfos = orderService.findByRequest(roomRequest);
+            Integer use = orderInfos.size();
+            Integer count = roomRepository.findOne(i).getSeatCount();
+            RoomStatus roomStatus = new RoomStatus(i,count-use,count);
+            roomStatuses.add(roomStatus);
+        }
+        return roomStatuses;
     }
 
     /*@Override
