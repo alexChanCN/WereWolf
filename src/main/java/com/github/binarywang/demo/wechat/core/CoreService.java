@@ -1,4 +1,4 @@
-package com.github.binarywang.demo.wechat.service;
+package com.github.binarywang.demo.wechat.core;
 
 import org.springframework.data.domain.Page;
 

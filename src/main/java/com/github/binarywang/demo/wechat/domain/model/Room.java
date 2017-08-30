@@ -19,8 +19,8 @@ public class Room implements Serializable{
     private String name;
     private String picUrl;
     private Integer seatCount;
-    private float price;
-    private Integer status;         //1：有座位、0：无座位
+    private Float price;
+    //private Integer status;         //1：有座位、0：无座位
     private Integer type;           //1:整租房 2：散客房间
 
 

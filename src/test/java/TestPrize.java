@@ -1,8 +1,10 @@
 import com.github.binarywang.demo.wechat.WxMpDemoApplication;
 import com.github.binarywang.demo.wechat.domain.model.Member;
 import com.github.binarywang.demo.wechat.domain.model.Prize;
+import com.github.binarywang.demo.wechat.domain.model.PrizeRecord;
+import com.github.binarywang.demo.wechat.repository.PrizeRecordRepository;
 import com.github.binarywang.demo.wechat.repository.PrizeRepository;
-import com.github.binarywang.demo.wechat.service.PrizeService;
+import com.github.binarywang.demo.wechat.service.PrizeRecordService;
 import com.github.binarywang.demo.wechat.utils.JsonUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,15 +23,17 @@ import java.util.List;
 @SpringBootTest(classes = WxMpDemoApplication.class)
 public class TestPrize {
     @Autowired
-    PrizeRepository repository;
+    PrizeRecordRepository recordRepository;
 
     @Autowired
-    PrizeService prizeService;
+    PrizeRecordService prizeRecordService;
+    @Autowired
+    PrizeRepository prizeRepository;
 
     @Test
     public void testFind() {
-       List<Prize> prizes = prizeService.listMine("oqAK2wRLiXO3bJ9JfPm53kH7ar6E",0);
-        System.out.println(JsonUtils.toJson(prizes));
+       List<PrizeRecord> prizeRecords = prizeRecordService.listMine("oqAK2wRLiXO3bJ9JfPm53kH7ar6E",0);
+        System.out.println(JsonUtils.toJson(prizeRecords));
     }
 
     @Test
@@ -39,22 +43,22 @@ public class TestPrize {
         //member.setId(3);
         member.setName("cs");
         //创建查询条件数据对象
-        Prize prize = new Prize();
-        prize.setMember(member);
+        PrizeRecord prizeRecord = new PrizeRecord();
+        prizeRecord.setMember(member);
 
         //创建匹配器，即如何使用查询条件
         ExampleMatcher matcher = ExampleMatcher.matching(); //构建对象
                 //.withIgnorePaths("focus");  //忽略属性：是否关注。因为是基本类型，需要忽略掉
 
         //创建实例
-        Example<Prize> ex = Example.of(prize, matcher);
+        Example<PrizeRecord> ex = Example.of(prizeRecord, matcher);
 
         //查询
-        List<Prize> ls = repository.findAll(ex);
+        List<PrizeRecord> ls = recordRepository.findAll(ex);
 
         //输出结果
         System.out.println("数量："+ls.size());
-        for (Prize bo:ls)
+        for (PrizeRecord bo:ls)
         {
             System.out.println(bo.getCreateTime());
         }
@@ -62,12 +66,13 @@ public class TestPrize {
 
     @Test
     public void testFind3() {
-        List<Prize> prizes = prizeService.findByName("张三");
-        System.out.println(JsonUtils.toJson(prizes));
+        List<PrizeRecord> prizeRecords = prizeRecordService.findByName("张三");
+        System.out.println(JsonUtils.toJson(prizeRecords));
     }
 
     @Test
     public void testFind4() {
-        System.out.println(prizeService.get(1));
+        System.out.println(prizeRecordService.get(1));
     }
+
 }

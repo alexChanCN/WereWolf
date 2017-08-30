@@ -69,7 +69,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         HttpMethod.GET,
                         "/**"
                 ).permitAll()
-                .antMatchers("/auth/**","/user/**","/wechat/**").permitAll()
+                .antMatchers("/auth/**","/user/**","/wechat/**","/oauth/**").permitAll()
                 .anyRequest().authenticated();
 
         // Custom JWT based security filter

@@ -11,11 +11,11 @@ import java.util.Date;
  */
 @Entity
 @Data
-public class OrderInfo implements Serializable{
+public class OrderRecord implements Serializable{
 
     @Id
     @GeneratedValue
-    private long id;
+    private Long id;
     @Temporal(TemporalType.TIMESTAMP)
     private Date createTime;
     @Temporal(TemporalType.TIMESTAMP)
@@ -23,17 +23,16 @@ public class OrderInfo implements Serializable{
 
     @ManyToOne
     private Member member;
-    /*private String openId;
-    private String phoneNo;*/
-
     @ManyToOne
     private Room room;
-    @ManyToOne
-    private Seat seat;        //null表示预定整间
+
+    /*@ManyToOne
+    private Seat seat;        //null表示预定整间*/
 
     @Temporal(TemporalType.DATE)
     private Date date;
     private Integer phase;
+    private Integer number;
     private String clerkName;
     private Integer status;
 

@@ -11,10 +11,10 @@ import java.util.List;
  * Created by cs on 2017/8/25.
  */
 public class QuestionUtils {
-    private static List<OptionInfo> options = new ArrayList<OptionInfo>();
-    private static QuestionInfo questionInfo = new QuestionInfo();
 
     public static QuestionInfo toOption(Question question){
+        List<OptionInfo> options = new ArrayList<OptionInfo>();
+        QuestionInfo questionInfo = new QuestionInfo();
         questionInfo.setId(question.getId());
         questionInfo.setTitle(question.getTitle());
         questionInfo.setAnswer(question.getAnswer());

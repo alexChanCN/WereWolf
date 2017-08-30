@@ -9,4 +9,5 @@ import lombok.Data;
 public class PrizeInfo {
     String openId;
     Integer prizeId;
+    Integer status;
 }

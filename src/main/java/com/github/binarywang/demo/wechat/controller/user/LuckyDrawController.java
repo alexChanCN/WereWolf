@@ -2,11 +2,14 @@ package com.github.binarywang.demo.wechat.controller.user;
 
 import com.github.binarywang.demo.wechat.domain.dto.PrizeInfo;
 import com.github.binarywang.demo.wechat.domain.model.Prize;
+import com.github.binarywang.demo.wechat.domain.model.PrizeRecord;
 import com.github.binarywang.demo.wechat.service.ChanceService;
 import com.github.binarywang.demo.wechat.service.MemberService;
+import com.github.binarywang.demo.wechat.service.PrizeRecordService;
 import com.github.binarywang.demo.wechat.service.PrizeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,11 +21,14 @@ import java.util.List;
 @RestController
 @RequestMapping("/user/luckyDraw")
 @Api(description = "抽奖模块")
+@Slf4j
 public class LuckyDrawController {
     @Autowired
     ChanceService chanceService;
     @Autowired
     MemberService memberService;
+    @Autowired
+    PrizeRecordService prizeRecordService;
     @Autowired
     PrizeService prizeService;
     /*@PutMapping
@@ -31,14 +37,15 @@ public class LuckyDrawController {
         memberService.changeChance(openId,-1);
         return "success";
     }*/
-    @PutMapping
+    @PostMapping
     @ApiOperation(value="抽奖", notes="抽奖")
     public String luckyDraw(@RequestBody PrizeInfo prizeInfo){
         String openId = prizeInfo.getOpenId();
-        Integer prizeId = prizeInfo.getPrizeId();
+
+        //Integer prizeId = prizeInfo.getPrizeId();
         if(memberService.changeChance(openId,-1)){
-            chanceService.add(openId,-1,0);
-            prizeService.add(openId,prizeId);
+            chanceService.reduce(openId);
+            prizeRecordService.add(prizeInfo);
             return "success";
         }
         else
@@ -46,16 +53,24 @@ public class LuckyDrawController {
 
     }
 
-    @GetMapping
+    @GetMapping("/record")
     @ApiOperation(value="显示还未兑现的奖品", notes="根据openId显示还未兑现的奖品")
-    public List<Prize> listNoGet(@RequestParam("id") String openId){
-        return prizeService.listMine(openId,0);
+    public List<PrizeRecord> listNoGet(@RequestParam("id") String openId){
+        return prizeRecordService.listMine(openId,1);
     }
 
     @GetMapping("get")
     //@RequestMapping(value="get", method=RequestMethod.GET)
     @ApiOperation(value="显示已经兑现的奖品", notes="根据openId显示已经兑现的奖品")
-    public List<Prize> listGet(@RequestParam("id") String openId){
-        return prizeService.listMine(openId,1);
+    public List<PrizeRecord> listGet(@RequestParam("id") String openId){
+        return prizeRecordService.listMine(openId,2);
+    }
+
+    @GetMapping
+    public List<Prize> getAll(){
+
+        List<Prize> prizes = prizeService.listAll();
+        prizes.remove(0);
+        return prizes;
     }
 }

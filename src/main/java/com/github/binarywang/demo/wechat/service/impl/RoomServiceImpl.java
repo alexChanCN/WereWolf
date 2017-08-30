@@ -1,35 +1,34 @@
 package com.github.binarywang.demo.wechat.service.impl;
 
-import com.github.binarywang.demo.wechat.domain.dto.FindSeatInfo;
 import com.github.binarywang.demo.wechat.domain.dto.RoomRequest;
 import com.github.binarywang.demo.wechat.domain.dto.RoomStatus;
-import com.github.binarywang.demo.wechat.domain.model.OrderInfo;
+import com.github.binarywang.demo.wechat.domain.model.OrderRecord;
+import com.github.binarywang.demo.wechat.domain.model.PrizeRecord;
 import com.github.binarywang.demo.wechat.domain.model.Room;
-import com.github.binarywang.demo.wechat.repository.OrderRepository;
 import com.github.binarywang.demo.wechat.repository.RoomRepository;
 import com.github.binarywang.demo.wechat.service.OrderService;
 import com.github.binarywang.demo.wechat.service.RoomService;
-import com.github.binarywang.demo.wechat.service.SeatService;
-import com.github.binarywang.demo.wechat.utils.DateUtils;
+import com.github.binarywang.demo.wechat.utils.JsonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+
+import static com.github.binarywang.demo.wechat.core.ProjectConstant.INTEGRITY;
+import static com.github.binarywang.demo.wechat.core.ProjectConstant.ROOM_COUNT;
 
 /**
  * Created by cs on 2017/8/5.
  */
 @Service
-public class RoomServiceImpl implements RoomService{
+public class RoomServiceImpl implements RoomService {
 
     @Autowired
     RoomRepository roomRepository;
-
-    @Autowired
-    SeatService seatService;
 
     @Autowired
     OrderService orderService;
@@ -100,7 +99,7 @@ public class RoomServiceImpl implements RoomService{
 
     }
 
-    @Override
+    /*@Override
     public Integer changeStatus(Integer roomId, Integer status) {
         Room room = roomRepository.findOne(roomId);
         Integer presentStatus = room.getStatus();
@@ -111,19 +110,33 @@ public class RoomServiceImpl implements RoomService{
         else
             return 0;
         return 1;
-    }
+    }*/
+
 
     @Override
-    public List<RoomStatus> getAllStatus(Date date, Integer phase) {
+    public List<RoomStatus> getAllStatus(RoomRequest roomRequest) {
         List<RoomStatus> roomStatuses = new ArrayList<RoomStatus>();
-        for(int i = 1;i<3;i++){
-            RoomRequest roomRequest = new RoomRequest(date,i,phase);
-            List<OrderInfo> orderInfos = orderService.findByRequest(roomRequest);
-            Integer use = orderInfos.size();
-            Integer count = roomRepository.findOne(i).getSeatCount();
-            RoomStatus roomStatus = new RoomStatus(i,count-use,count);
+
+        List<Room> rooms = roomRepository.findByType(roomRequest.getType());
+
+        for (Room room : rooms) {
+            RoomStatus roomStatus = new RoomStatus();
+            Integer total = room.getSeatCount();
+            roomStatus.setNo(room.getId());
+            roomStatus.setCurrent(0);
+            roomStatus.setTotal(total);
+            roomStatus.setPicUrl(room.getPicUrl());
             roomStatuses.add(roomStatus);
         }
+
+        List<OrderRecord> orderRecords = orderService.findByRequest(roomRequest);
+        for (OrderRecord orderRecord : orderRecords) {
+            Integer index = orderRecord.getRoom().getId() - 1;
+            RoomStatus roomStatus = roomStatuses.get(index);
+            roomStatus.setCurrent(roomStatus.getCurrent() + orderRecord.getNumber());
+
+        }
+
         return roomStatuses;
     }
 

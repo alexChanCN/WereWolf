@@ -15,7 +15,8 @@ public class Teacher implements Serializable{
     private String name;
     private String sex;
     private Integer age;
-    private String phone_no;
+    private String phoneNo;
+    private String imgUrl;
     private String profile;
 
     /*
@@ -62,12 +63,12 @@ public class Teacher implements Serializable{
         this.age = age;
     }
 
-    public String getPhone_no() {
-        return phone_no;
+    public String getPhoneNo() {
+        return phoneNo;
     }
 
-    public void setPhone_no(String phone_no) {
-        this.phone_no = phone_no;
+    public void setPhoneNo(String phoneNo) {
+        this.phoneNo = phoneNo;
     }
 
     public String getProfile() {
@@ -86,16 +87,11 @@ public class Teacher implements Serializable{
         this.comments = comments;
     }
 
-    @Override
-    public String toString() {
-        return "Teacher{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", sex='" + sex + '\'' +
-                ", age=" + age +
-                ", phone_no='" + phone_no + '\'' +
-                ", profile='" + profile + '\'' +
-                //", comments=" + comments +
-                '}';
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
     }
 }

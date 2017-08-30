@@ -1,15 +1,18 @@
 import com.github.binarywang.demo.wechat.WxMpDemoApplication;
-import com.github.binarywang.demo.wechat.domain.dto.FindSeatInfo;
-import com.github.binarywang.demo.wechat.domain.dto.ReserveInfo;
-import com.github.binarywang.demo.wechat.domain.model.OrderInfo;
+import com.github.binarywang.demo.wechat.domain.dto.OrderRequest;
+import com.github.binarywang.demo.wechat.domain.dto.RoomRequest;
+import com.github.binarywang.demo.wechat.domain.model.OrderRecord;
 import com.github.binarywang.demo.wechat.domain.model.Room;
 import com.github.binarywang.demo.wechat.repository.OrderRepository;
 import com.github.binarywang.demo.wechat.service.OrderService;
+import com.github.binarywang.demo.wechat.utils.DateUtils;
 import com.github.binarywang.demo.wechat.utils.JsonUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Date;
@@ -30,14 +33,14 @@ public class TestOrder {
 
     @Test
     public void testAdd(){
-        ReserveInfo reserveInfo = new ReserveInfo(1,1,1,"xxx");
+        OrderRequest reserveInfo = new OrderRequest("xxx","2017-8-30",1,1,1);
         orderService.reserve(reserveInfo);
 
     }
 
     @Test
     public void testUpdate(){
-        orderService.verify(1l,"xxx");
+        orderService.confirm(1l,"xxx");
     }
 
     @Test
@@ -47,24 +50,36 @@ public class TestOrder {
         Date date = new Date();
         Room room = new Room();
         room.setId(1);
-        List<OrderInfo> orderInfos = repository.findByDateAndRoomAndPhase(date,room,1);
+        List<OrderRecord> orderInfos = repository.findByDateAndRoomAndPhase(date,room,1);
 
         System.out.println(JsonUtils.toJson(orderInfos));
         //orderInfos.forEach(System.out::println);
-    }
-    @Test
-    public void  testFind2(){
-        FindSeatInfo info = new FindSeatInfo();
-        info.setDate("2017-08-10");
-        info.setRoomId(1);
-        info.setPhase(1);
-        System.out.println(JsonUtils.toJson(orderService.findSeats(info)));
     }
 
     @Test
     public void findByOpenId(){
         //JsonUtils.toJson(orderService.findByOpenId("oqAK2wRLiXO3bJ9JfPm53kH7ar6E"));
-        List<OrderInfo> orderInfos = orderService.findByOpenId("oqAK2wRLiXO3bJ9JfPm53kH7ar6E");
+        List<OrderRecord> orderInfos = orderService.findByOpenId("oqAK2wRLiXO3bJ9JfPm53kH7ar6E");
         orderInfos.forEach(System.out::println);
+    }
+
+    @Test
+    public void  testFind2(){
+        OrderRecord orderRecord = new OrderRecord();
+        orderRecord.setPhase(1);
+        //创建实例
+        Example<OrderRecord> ex = Example.of(orderRecord);
+        //查询
+        List<OrderRecord> orderRecords =  repository.findAll(ex);
+        System.out.println(JsonUtils.toJson(orderRecords));
+    }
+    @Test
+    public void  testFind3(){
+        RoomRequest roomRequest = new RoomRequest();
+        roomRequest.setPhase(1);
+        roomRequest.setType(1);
+        roomRequest.setDate("2017-08-30");
+        List<OrderRecord> orderRecords =  orderService.findByRequest(roomRequest);
+        System.out.println(JsonUtils.toJson(orderRecords));
     }
 }

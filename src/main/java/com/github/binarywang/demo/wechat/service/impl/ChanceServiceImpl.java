@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
-
+import static com.github.binarywang.demo.wechat.core.ProjectConstant.*;
 /**
  * Created by cs on 2017/8/9.
  */
@@ -17,7 +17,7 @@ import java.util.List;
 public class ChanceServiceImpl implements ChanceService {
 
     @Autowired
-    ChanceRepository awardRepository;
+    ChanceRepository chanceRepository;
 
 
     @Override
@@ -86,18 +86,29 @@ public class ChanceServiceImpl implements ChanceService {
     }
 
     @Override
-    public Integer add(String openId, Integer count, Integer reason) {
-        Chance award = new Chance();
-        award.setOpenId(openId);
-        award.setReason(reason);
-        award.setTime(new Date());
-        award.setCount(count);
-        awardRepository.save(award);
+    public Integer add(String openId,Integer reason) {
+        Chance chance = new Chance();
+        chance.setOpenId(openId);
+        chance.setReason(reason);
+        chance.setTime(new Date());
+        chance.setCount(1);         //增加一次机会
+        chanceRepository.save(chance);
         return 1;
     }
 
     @Override
+    public Integer reduce(String openId) {
+        Chance chance = new Chance();
+        chance.setOpenId(openId);
+        chance.setReason(LUCKY_DRAW);
+        chance.setTime(new Date());
+        chance.setCount(-1);         //减少一次机会
+        chanceRepository.save(chance);
+        return -1;
+    }
+
+    @Override
     public List<Chance> findByOpenId(String openId) {
-        return awardRepository.findByOpenId(openId);
+        return chanceRepository.findByOpenId(openId);
     }
 }

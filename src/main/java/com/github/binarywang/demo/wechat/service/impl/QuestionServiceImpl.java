@@ -1,7 +1,9 @@
 package com.github.binarywang.demo.wechat.service.impl;
 
 import com.github.binarywang.demo.wechat.domain.dto.QuestionInfo;
+import com.github.binarywang.demo.wechat.domain.model.AnswerRecord;
 import com.github.binarywang.demo.wechat.domain.model.Question;
+import com.github.binarywang.demo.wechat.repository.AnswerRecordRepository;
 import com.github.binarywang.demo.wechat.repository.QuestionRepository;
 import com.github.binarywang.demo.wechat.service.QuestionService;
 import com.github.binarywang.demo.wechat.utils.QuestionUtils;
@@ -47,6 +49,7 @@ public class QuestionServiceImpl implements QuestionService{
         QuestionInfo questionInfo = QuestionUtils.toOption(questionRepository.findOne(id+1));
         return questionInfo;
     }
+
 
     @Override
     public Integer save(Question model) {

@@ -5,6 +5,9 @@ import com.github.binarywang.demo.wechat.domain.model.Member;
 import com.github.binarywang.demo.wechat.service.MemberService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import me.chanjar.weixin.common.exception.WxErrorException;
+import me.chanjar.weixin.mp.api.WxMpService;
+import me.chanjar.weixin.mp.bean.result.WxMpUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,11 +22,16 @@ public class MemberController {
     @Autowired
     MemberService memberService;
 
+    @Autowired
+    WxMpService wxMpService;
+
     @PostMapping
     @ApiOperation(value="注册会员", notes="根据registerInfo信息注册成为会员;必须先关注公众号,即subscriber表中有对应openId字段")
     public String register(@RequestBody RegisterInfo registerInfo){
-        memberService.registry(registerInfo);
-        return "success";
+        if(memberService.registry(registerInfo))
+            return "success";
+        else
+            return "error";
     }
 
     /*@GetMapping("/{id}")
@@ -51,5 +59,18 @@ public class MemberController {
         return "index";
     }
 */
+     @GetMapping("/headUrl/{openId}")
+     @ApiOperation(value="获取会员信息", notes="根据openId，获取该会员信息")
+     public String getHeadUrl(@PathVariable String openId){
+         String lang = "zh_CN"; //语言
+         WxMpUser user = new WxMpUser();
+         try {
+              user = wxMpService.getUserService().userInfo(openId,lang);
+         } catch (WxErrorException e) {
+             e.printStackTrace();
+         }
+         return user.getHeadImgUrl();
+     }
+
 
 }

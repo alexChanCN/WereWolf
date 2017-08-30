@@ -2,18 +2,18 @@ package com.github.binarywang.demo.wechat.service.impl;
 
 import com.github.binarywang.demo.wechat.domain.dto.RegisterInfo;
 import com.github.binarywang.demo.wechat.domain.model.Member;
-import com.github.binarywang.demo.wechat.domain.model.Subscriber;
 import com.github.binarywang.demo.wechat.repository.MemberRepository;
 import com.github.binarywang.demo.wechat.repository.SubscriberRepository;
 import com.github.binarywang.demo.wechat.service.MemberService;
-import com.github.binarywang.demo.wechat.utils.DecodeBase64;
-import org.apache.commons.codec.binary.Base64;
+import com.github.binarywang.java.emoji.EmojiConverter;
+import me.chanjar.weixin.common.exception.WxErrorException;
+import me.chanjar.weixin.mp.api.WxMpService;
+import me.chanjar.weixin.mp.bean.result.WxMpUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.List;
 
@@ -28,28 +28,47 @@ public class MemberServiceImpl implements MemberService {
     @Autowired
     MemberRepository memberRepository;
 
+    @Autowired
+    WxMpService wxMpService;
+
+    private EmojiConverter emojiConverter = EmojiConverter.getInstance();
+
     @Override
     public boolean registry(RegisterInfo registerInfo) {
-
         String openId = registerInfo.getOpenId();
-        Subscriber subscriber = subscriberRepository.findByOpenId(openId);
+        String lang = "zh_CN"; //语言
+        WxMpUser user = new WxMpUser();
+
+        //Subscriber subscriber = subscriberRepository.findByOpenId(openId);
+        try {
+            user = wxMpService.getUserService().userInfo(openId,lang);
+        } catch (WxErrorException e) {
+            e.printStackTrace();
+        }
         Member member = new Member();
+        member.setOpenId(openId);
         member.setPhoneNo(registerInfo.getPhoneNo());
         member.setName(registerInfo.getName());
         member.setIdCard(registerInfo.getIdCard());
+
         member.setAwardCount(1);
-        member.setHeadImgUrl(subscriber.getHeadImgUrl());
-        member.setNickName(subscriber.getNickName());
-        member.setSex(subscriber.getSex());
-        member.setOpenId(subscriber.getOpenId());
         member.setCreateTime(new Date());
-        memberRepository.save(member);
+
+        member.setHeadImgUrl(user.getHeadImgUrl());
+        String alis = emojiConverter.toAlias(user.getNickname());
+        member.setNickName(alis);
+
+
+        if(memberRepository.findByOpenId(openId)==null)
+            memberRepository.save(member);
+        else
+            return false;
         return true;
     }
 
     @Override
     public boolean changeChance(String openId, Integer i) {
-        Member member = memberRepository.findByOpenId(openId);
+        Member member = findByOpenId(openId);
         Integer count = member.getAwardCount();
         if (i > 0 || (i < 0 && count > 0)) {
             count = count + i;
@@ -71,6 +90,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public Member findByOpenId(String openId) {
         return memberRepository.findByOpenId(openId);
+
     }
 
 
@@ -106,10 +126,8 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public Member get(Integer id) {
-        Member member = memberRepository.findOne(id);
-        String nickName = member.getNickName();
-        member.setNickName(DecodeBase64.Decode(nickName));
-        return member;
+        return memberRepository.findOne(id);
+
     }
 
     @Override
@@ -119,22 +137,12 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public List<Member> listAll() {
-        List<Member> members = (List<Member>) memberRepository.findAll();
-        for(Member member: members){
-            String nickName = member.getNickName();
-            member.setNickName(DecodeBase64.Decode(nickName));
-        }
-        return members;
+        return  (List<Member>) memberRepository.findAll();
     }
 
     @Override
     public Page<Member> findByPage(Integer start, Integer size) {
-        Page<Member> members = memberRepository.findAll(new PageRequest(start,size));
-        for(Member member: members){
-            String nickName = member.getNickName();
-            member.setNickName(DecodeBase64.Decode(nickName));
-        }
-        return members;
+        return memberRepository.findAll(new PageRequest(start, size));
     }
 
     @Override

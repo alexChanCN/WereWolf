@@ -97,6 +97,8 @@ public class CommentServiceImpl implements CommentService{
         String words = commentInfo.getComment();
         Date date = new Date();
         String openId = commentInfo.getOpenId();
+        /*openId = OpenIdUtils.sub(openId);
+        System.out.println(openId);*/
         Comment comment = new Comment();
         comment.setMember(memberService.findByOpenId(openId));
         comment.setComment(words);
@@ -110,7 +112,7 @@ public class CommentServiceImpl implements CommentService{
     public List<Comment> findByTeacher(Integer teacherId) {
         Teacher teacher = new Teacher();
         teacher.setId(teacherId);
-        return commentRepository.findByTeacher(teacher);
+        return commentRepository.findByTeacherOrderByIdDesc(teacher);
     }
 
 

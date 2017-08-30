@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 /**
  * Created by cs on 2017/8/5.
@@ -28,6 +29,11 @@ public class TestMember {
 
     @Test
     public void get(){
-        System.out.println(JsonUtils.toJson(memberService.get(3)));
+        List<Member> members = memberService.listAll();
+        for(Member member:members){
+        String openId = member.getOpenId();
+            System.out.println(openId.length());
+        }
+
     }
 }

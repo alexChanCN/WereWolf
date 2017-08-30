@@ -8,6 +8,7 @@ import lombok.Data;
 @Data
 public class RegisterInfo {
     private String openId;
+
     private String phoneNo;         //电话号码
     private String idCard;          //身份证
     private String name;            //真实姓名

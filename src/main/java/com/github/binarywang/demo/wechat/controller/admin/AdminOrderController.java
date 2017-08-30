@@ -1,6 +1,6 @@
 package com.github.binarywang.demo.wechat.controller.admin;
 
-import com.github.binarywang.demo.wechat.domain.model.OrderInfo;
+import com.github.binarywang.demo.wechat.domain.model.OrderRecord;
 import com.github.binarywang.demo.wechat.service.OrderService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -23,32 +23,32 @@ public class AdminOrderController {
 
     @GetMapping("/page")
     @ApiOperation(value="分页获取订单信息", notes="分页获取订单信息")
-    public Page<OrderInfo> findByPage(@RequestParam Integer start, @RequestParam Integer size){
+    public Page<OrderRecord> findByPage(@RequestParam Integer start, @RequestParam Integer size){
         return orderService.findByPage(start, size);
     }
 
     @GetMapping()
     @ApiOperation(value="获取所有订单信息", notes="获取所有订单信息")
-    public List<OrderInfo> findAll(){
+    public List<OrderRecord> findAll(){
         return orderService.listAll();
     }
 
     @GetMapping("/{id}")
     @ApiOperation(value="根据id，获取该订单信息", notes="根据id，获取该订单信息")
-    public OrderInfo getOne(@PathVariable long id){
+    public OrderRecord getOne(@PathVariable long id){
         return orderService.get(id);
     }
 
     @PostMapping
     @ApiOperation(value="添加", notes="根据OrderInfo,添加订单记录")
-    public String add(@RequestBody OrderInfo orderInfo){
+    public String add(@RequestBody OrderRecord orderInfo){
         orderService.save(orderInfo);
         return "success";
     }
 
     @PutMapping
     @ApiOperation(value="修改", notes="根据OrderInfo,修改订单记录")
-    public String update(@RequestBody OrderInfo orderInfo){
+    public String update(@RequestBody OrderRecord orderInfo){
         orderService.update(orderInfo);
         return "success";
     }
@@ -60,6 +60,5 @@ public class AdminOrderController {
         orderService.delete(id);
         return "success";
     }
-
 
 }

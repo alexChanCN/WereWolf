@@ -3,6 +3,7 @@ package com.github.binarywang.demo.wechat.handler;
 import com.github.binarywang.demo.wechat.builder.TextBuilder;
 import com.github.binarywang.demo.wechat.domain.model.Subscriber;
 import com.github.binarywang.demo.wechat.repository.SubscriberRepository;
+import com.github.binarywang.java.emoji.EmojiConverter;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.mp.api.WxMpService;
@@ -38,11 +39,14 @@ public class SubscribeHandler extends AbstractHandler {
             // TODO 可以添加关注用户到本地
             Subscriber user = new Subscriber();
             String nickname = userWxInfo.getNickname();
-            try {
+            EmojiConverter emojiConverter = EmojiConverter.getInstance();
+            nickname = emojiConverter.toAlias(nickname);
+
+            /*try {
                 nickname = Base64.encodeBase64String(nickname.getBytes("utf-8"));
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
-            }
+            }*/
             // 出库后，使用 Base64 解码
             //nickname = new String(Base64.decodeBase64(nickname.getBytes()), "utf-8");
             user.setNickName(nickname);

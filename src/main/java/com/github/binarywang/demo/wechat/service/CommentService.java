@@ -1,5 +1,6 @@
 package com.github.binarywang.demo.wechat.service;
 
+import com.github.binarywang.demo.wechat.core.CoreService;
 import com.github.binarywang.demo.wechat.domain.dto.CommentInfo;
 import com.github.binarywang.demo.wechat.domain.model.Comment;
 

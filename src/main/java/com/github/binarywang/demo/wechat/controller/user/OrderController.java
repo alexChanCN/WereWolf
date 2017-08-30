@@ -1,7 +1,7 @@
 package com.github.binarywang.demo.wechat.controller.user;
 
-import com.github.binarywang.demo.wechat.domain.dto.ReserveInfo;
-import com.github.binarywang.demo.wechat.domain.model.OrderInfo;
+import com.github.binarywang.demo.wechat.domain.dto.OrderRequest;
+import com.github.binarywang.demo.wechat.domain.model.OrderRecord;
 import com.github.binarywang.demo.wechat.service.OrderService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -23,14 +23,14 @@ public class OrderController {
 
     @PostMapping
     @ApiOperation(value="预定", notes="填写registerInfo信息，预定房间、座位")
-    public String add(@RequestBody ReserveInfo reserveInfo){
+    public String add(@RequestBody OrderRequest reserveInfo){
         orderService.reserve(reserveInfo);
         return "success";
     }
 
     @GetMapping("{openId}")
     @ApiOperation(value="获取订单信息", notes="根据openId，获取该会员的所有订单信息")
-    public List<OrderInfo> listAll(@PathVariable String openId){
+    public List<OrderRecord> listAll(@PathVariable String openId){
         return orderService.findByOpenId(openId);
     }
     /*@PutMapping
