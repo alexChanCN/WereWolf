@@ -1,10 +1,9 @@
-import com.github.binarywang.demo.wechat.WxMpDemoApplication;
-import com.github.binarywang.demo.wechat.domain.dto.PwdInfo;
-import com.github.binarywang.demo.wechat.domain.entity.Authority;
-import com.github.binarywang.demo.wechat.domain.entity.User;
-import com.github.binarywang.demo.wechat.security.service.UserService;
-import com.github.binarywang.demo.wechat.utils.EncodePwdUtils;
-import com.github.binarywang.demo.wechat.utils.JsonUtils;
+import com.cs.wechat.WxMpDemoApplication;
+import com.cs.wechat.domain.dto.PwdInfo;
+import com.cs.wechat.domain.entity.Authority;
+import com.cs.wechat.domain.entity.User;
+import com.cs.wechat.security.service.UserService;
+import com.cs.wechat.utils.EncodePwdUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

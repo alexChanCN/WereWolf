@@ -1,19 +1,15 @@
-import com.github.binarywang.demo.wechat.WxMpDemoApplication;
-import com.github.binarywang.demo.wechat.domain.dto.QuestionInfo;
-import com.github.binarywang.demo.wechat.domain.model.Question;
-import com.github.binarywang.demo.wechat.repository.AnswerRecordRepository;
-import com.github.binarywang.demo.wechat.service.AnswerRecordService;
-import com.github.binarywang.demo.wechat.service.QuestionService;
-import com.github.binarywang.demo.wechat.utils.DateUtils;
-import com.github.binarywang.demo.wechat.utils.JsonUtils;
-import org.assertj.core.util.DateUtil;
+import com.cs.wechat.WxMpDemoApplication;
+import com.cs.wechat.domain.dto.QuestionInfo;
+import com.cs.wechat.domain.model.Question;
+import com.cs.wechat.repository.AnswerRecordRepository;
+import com.cs.wechat.service.AnswerRecordService;
+import com.cs.wechat.service.QuestionService;
+import com.cs.wechat.utils.JsonUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.util.Date;
 
 /**
  * Created by cs on 2017/8/5.

@@ -1,18 +1,16 @@
-import com.github.binarywang.demo.wechat.WxMpDemoApplication;
-import com.github.binarywang.demo.wechat.domain.dto.OrderRequest;
-import com.github.binarywang.demo.wechat.domain.dto.RoomRequest;
-import com.github.binarywang.demo.wechat.domain.model.OrderRecord;
-import com.github.binarywang.demo.wechat.domain.model.Room;
-import com.github.binarywang.demo.wechat.repository.OrderRepository;
-import com.github.binarywang.demo.wechat.service.OrderService;
-import com.github.binarywang.demo.wechat.utils.DateUtils;
-import com.github.binarywang.demo.wechat.utils.JsonUtils;
+import com.cs.wechat.WxMpDemoApplication;
+import com.cs.wechat.domain.dto.OrderRequest;
+import com.cs.wechat.domain.dto.RoomRequest;
+import com.cs.wechat.domain.model.OrderRecord;
+import com.cs.wechat.domain.model.Room;
+import com.cs.wechat.repository.OrderRepository;
+import com.cs.wechat.service.OrderService;
+import com.cs.wechat.utils.JsonUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Date;
@@ -33,7 +31,7 @@ public class TestOrder {
 
     @Test
     public void testAdd(){
-        OrderRequest reserveInfo = new OrderRequest("xxx","2017-8-30",1,1,1);
+        OrderRequest reserveInfo = new OrderRequest("xxx","2017-8-30",1,1,1,1);
         orderService.reserve(reserveInfo);
 
     }
@@ -64,6 +62,12 @@ public class TestOrder {
     }
 
     @Test
+    public void  testFind1(){
+        OrderRecord orderRecord = repository.findOne(1l);
+        orderRecord.setClerkName("fsdfsdf");
+        repository.save(orderRecord);
+    }
+    @Test
     public void  testFind2(){
         OrderRecord orderRecord = new OrderRecord();
         orderRecord.setPhase(1);
@@ -81,5 +85,10 @@ public class TestOrder {
         roomRequest.setDate("2017-08-30");
         List<OrderRecord> orderRecords =  orderService.findByRequest(roomRequest);
         System.out.println(JsonUtils.toJson(orderRecords));
+    }
+    @Test
+    public void testJson(){
+        OrderRecord record = new OrderRecord();
+        System.out.println(JsonUtils.toJson(record));
     }
 }

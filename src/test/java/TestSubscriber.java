@@ -1,6 +1,6 @@
-import com.github.binarywang.demo.wechat.WxMpDemoApplication;
-import com.github.binarywang.demo.wechat.domain.model.Subscriber;
-import com.github.binarywang.demo.wechat.repository.SubscriberRepository;
+import com.cs.wechat.WxMpDemoApplication;
+import com.cs.wechat.domain.model.Subscriber;
+import com.cs.wechat.repository.SubscriberRepository;
 import org.apache.commons.codec.binary.Base64;
 import org.junit.Test;
 import org.junit.runner.RunWith;

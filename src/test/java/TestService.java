@@ -1,11 +1,9 @@
-import com.github.binarywang.demo.wechat.WxMpDemoApplication;
-import com.github.binarywang.demo.wechat.domain.model.Comment;
-import com.github.binarywang.demo.wechat.domain.model.Question;
-import com.github.binarywang.demo.wechat.domain.model.Teacher;
-import com.github.binarywang.demo.wechat.repository.QuestionRepository;
-import com.github.binarywang.demo.wechat.service.MemberService;
-import com.github.binarywang.demo.wechat.service.QuestionService;
-import com.github.binarywang.demo.wechat.service.TeacherService;
+import com.cs.wechat.WxMpDemoApplication;
+import com.cs.wechat.domain.model.Question;
+import com.cs.wechat.repository.QuestionRepository;
+import com.cs.wechat.service.MemberService;
+import com.cs.wechat.service.QuestionService;
+import com.cs.wechat.service.TeacherService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,18 +63,7 @@ public class TestService {
         System.out.println(question);
     }
 
-    @Test
-    public void testQuestionCompare(){
-        System.out.println(questionService.compareAnswer(1,"a"));
-    }
 
-    @Test
-    public void testTeacher(){
-        List<Teacher> teachers = teacherService.listAll();
-        teachers.forEach(System.out::println);
-        List<Comment> comments = teacherService.get(1).getComments();
-        comments.forEach(System.out::println);
-    }
 
     @Test
     public void testMember(){

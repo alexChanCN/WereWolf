@@ -1,6 +1,6 @@
-import com.github.binarywang.demo.wechat.WxMpDemoApplication;
-import com.github.binarywang.demo.wechat.domain.dto.CommentInfo;
-import com.github.binarywang.demo.wechat.service.CommentService;
+import com.cs.wechat.WxMpDemoApplication;
+import com.cs.wechat.domain.dto.CommentInfo;
+import com.cs.wechat.service.CommentService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

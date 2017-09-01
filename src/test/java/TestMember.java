@@ -1,15 +1,12 @@
-import com.github.binarywang.demo.wechat.WxMpDemoApplication;
-import com.github.binarywang.demo.wechat.domain.model.Member;
-import com.github.binarywang.demo.wechat.service.MemberService;
-import com.github.binarywang.demo.wechat.utils.JsonUtils;
-import org.apache.commons.codec.binary.Base64;
+import com.cs.wechat.WxMpDemoApplication;
+import com.cs.wechat.domain.model.Member;
+import com.cs.wechat.service.MemberService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 /**

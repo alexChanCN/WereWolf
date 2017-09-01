@@ -1,3 +1,3 @@
 Manifest-Version: 1.0
-Main-Class: com.github.binarywang.demo.wechat.WxMpDemoApplication
+Main-Class: com.cs.wechat.WxMpDemoApplication
 
