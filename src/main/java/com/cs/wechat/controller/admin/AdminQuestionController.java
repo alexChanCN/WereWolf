@@ -23,19 +23,19 @@ public class AdminQuestionController {
 
     @GetMapping("/page")
     @ApiOperation(value="分页获取题目信息", notes="分页获取题目信息")
-    public Page<Question> findByPage(@RequestHeader("Authorization")String authorization,@RequestParam Integer start, @RequestParam Integer size){
+    public Page<Question> findByPage(@RequestParam Integer start, @RequestParam Integer size){
         return questionService.findByPage(start, size);
     }
 
     @GetMapping()
     @ApiOperation(value="获取所有题目信息", notes="获取所有题目信息")
-    public List<Question> findAll(@RequestHeader("Authorization")String authorization){
+    public List<Question> findAll(){
         return questionService.listAll();
     }
 
     @GetMapping("/{id}")
     @ApiOperation(value="根据id，获取该题目信息", notes="根据id，获取该题目信息")
-    public Question getOne(@RequestHeader("Authorization")String authorization,@PathVariable Integer id){
+    public Question getOne(@PathVariable Integer id){
         return questionService.get(id);
     }
 
@@ -54,7 +54,7 @@ public class AdminQuestionController {
     }
 
 
-    @DeleteMapping
+    @DeleteMapping("{id}")
     @ApiOperation(value="删除", notes="根据id,删除题目信息")
     public String delete(@RequestHeader("Authorization")String authorization,@PathVariable Integer id){
         questionService.delete(id);

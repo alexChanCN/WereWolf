@@ -1,6 +1,6 @@
 package com.cs.wechat.controller.user;
 
-import com.cs.wechat.domain.dto.RegisterInfo;
+import com.cs.wechat.domain.vo.RegisterInfo;
 import com.cs.wechat.domain.model.Member;
 import com.cs.wechat.service.MemberService;
 import io.swagger.annotations.Api;

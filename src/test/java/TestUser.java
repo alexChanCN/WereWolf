@@ -1,5 +1,5 @@
 import com.cs.wechat.WxMpDemoApplication;
-import com.cs.wechat.domain.dto.PwdInfo;
+import com.cs.wechat.domain.vo.PwdInfo;
 import com.cs.wechat.domain.entity.Authority;
 import com.cs.wechat.domain.entity.User;
 import com.cs.wechat.security.service.UserService;

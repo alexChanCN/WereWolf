@@ -6,6 +6,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,19 +24,27 @@ public class AdminMemberController {
 
     @GetMapping("/page")
     @ApiOperation(value="分页获取会员信息", notes="分页获取会员信息")
-    public Page<Member> findByPage(@RequestHeader("Authorization")String authorization,@RequestParam Integer start, @RequestParam Integer size){
+    public Page<Member> findByPage(@RequestParam Integer start, @RequestParam Integer size){
         return memberService.findByPage(start, size);
+    }
+
+    @GetMapping("/name")
+    @ApiOperation(value="根据姓名,分页查询", notes="根据姓名,分页查询")
+    public Page<Member> findByName(@RequestParam String name,@RequestParam Integer start, @RequestParam Integer size){
+        Member member = new Member();
+        member.setName(name);
+        return memberService.findByMatcher(member,"name",new PageRequest(start,size));
     }
 
     @GetMapping()
     @ApiOperation(value="获取所有会员信息", notes="获取所有会员信息")
-    public List<Member> findAll(@RequestHeader("Authorization")String authorization){
+    public List<Member> findAll(){
         return memberService.listAll();
     }
 
     @GetMapping("/{id}")
     @ApiOperation(value="根据id，获取该会员信息", notes="根据id，获取该会员信息")
-    public Member getOne(@RequestHeader("Authorization")String authorization,@PathVariable Integer id){
+    public Member getOne(@PathVariable Integer id){
         return memberService.get(id);
     }
 
@@ -54,7 +63,7 @@ public class AdminMemberController {
     }
 
 
-    @DeleteMapping
+    @DeleteMapping("{id}")
     @ApiOperation(value="删除", notes="根据id,删除会员信息")
     public String delete(@RequestHeader("Authorization")String authorization,@PathVariable Integer id){
         memberService.delete(id);

@@ -2,7 +2,7 @@ package com.cs.wechat.service;
 
 
 import com.cs.wechat.core.BaseService;
-import com.cs.wechat.domain.dto.QuestionInfo;
+import com.cs.wechat.domain.vo.QuestionInfo;
 import com.cs.wechat.domain.model.Question;
 
 /**

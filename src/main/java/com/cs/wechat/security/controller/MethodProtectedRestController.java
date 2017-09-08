@@ -1,6 +1,6 @@
 package com.cs.wechat.security.controller;
 
-import com.cs.wechat.domain.dto.PwdInfo;
+import com.cs.wechat.domain.vo.PwdInfo;
 import com.cs.wechat.domain.entity.User;
 import com.cs.wechat.security.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

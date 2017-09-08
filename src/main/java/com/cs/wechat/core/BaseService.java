@@ -1,6 +1,9 @@
 package com.cs.wechat.core;
 
+import com.cs.wechat.domain.model.PrizeRecord;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
 
@@ -38,6 +41,12 @@ public interface BaseService<M,ID>{
 
         //分页查询
         public Page<M> findByPage(Integer start, Integer size);
+
+        //example 分页查询
+        Page<M> findByExample(M m,PageRequest pageRequest);
+
+        //ExampleMatcher 分页查询
+        Page<M> findByMatcher(M m, String name, PageRequest pageRequest);
 
         //根据Id判断对象是否存在
         boolean exists(ID id);

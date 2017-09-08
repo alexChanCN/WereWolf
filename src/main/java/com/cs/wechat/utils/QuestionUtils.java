@@ -1,7 +1,7 @@
 package com.cs.wechat.utils;
 
-import com.cs.wechat.domain.dto.OptionInfo;
-import com.cs.wechat.domain.dto.QuestionInfo;
+import com.cs.wechat.domain.vo.OptionInfo;
+import com.cs.wechat.domain.vo.QuestionInfo;
 import com.cs.wechat.domain.model.Question;
 
 import java.util.ArrayList;

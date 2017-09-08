@@ -24,19 +24,19 @@ public class AdminTeacherController {
 
     @GetMapping("/page")
     @ApiOperation(value="分页获取教练信息", notes="分页获取教练信息")
-    public Page<Teacher> findByPage(@RequestHeader("Authorization")String authorization,@RequestParam Integer start, @RequestParam Integer size){
+    public Page<Teacher> findByPage(@RequestParam Integer start, @RequestParam Integer size){
         return teacherService.findByPage(start, size);
     }
 
     @GetMapping()
     @ApiOperation(value="获取所有教练信息", notes="获取所有教练信息")
-    public List<Teacher> findAll(@RequestHeader("Authorization")String authorization){
+    public List<Teacher> findAll(){
         return teacherService.listAll();
     }
 
     @GetMapping("/{id}")
     @ApiOperation(value="根据id，获取该教练信息", notes="根据id，获取该教练信息")
-    public Teacher getOne(@RequestHeader("Authorization")String authorization,@PathVariable Integer id){
+    public Teacher getOne(@PathVariable Integer id){
         return teacherService.get(id);
     }
 
@@ -55,7 +55,7 @@ public class AdminTeacherController {
     }
 
 
-    @DeleteMapping
+    @DeleteMapping("{id}")
     @ApiOperation(value="删除", notes="根据id,删除教练信息")
     public String delete(@RequestHeader("Authorization")String authorization,@PathVariable Integer id){
         teacherService.delete(id);

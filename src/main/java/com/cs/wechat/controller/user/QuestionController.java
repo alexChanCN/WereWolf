@@ -1,8 +1,8 @@
 package com.cs.wechat.controller.user;
 
 import com.cs.wechat.service.MemberService;
-import com.cs.wechat.domain.dto.AnswerResponse;
-import com.cs.wechat.domain.dto.QuestionInfo;
+import com.cs.wechat.domain.vo.AnswerResponse;
+import com.cs.wechat.domain.vo.QuestionInfo;
 import com.cs.wechat.domain.model.AnswerRecord;
 import com.cs.wechat.domain.model.Question;
 import com.cs.wechat.service.AnswerRecordService;

@@ -1,11 +1,14 @@
 package com.cs.wechat.controller.admin;
 
+import com.cs.wechat.domain.model.Member;
+import com.cs.wechat.domain.model.Prize;
 import com.cs.wechat.domain.model.PrizeRecord;
 import com.cs.wechat.service.PrizeRecordService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,7 +17,7 @@ import java.util.List;
  * Created by cs on 2017/8/10.
  */
 @RestController
-@RequestMapping("/admin/prize")
+@RequestMapping("/admin/lucky")
 @Api(description = "抽奖管理模块")
 public class AdminLuckyDrawController {
 
@@ -23,33 +26,38 @@ public class AdminLuckyDrawController {
 
     @GetMapping("/page")
     @ApiOperation(value = "分页获取奖品信息", notes = "分页获取奖品信息")
-    public Page<PrizeRecord> findByPage(@RequestParam Integer start, @RequestParam Integer size,@RequestHeader("Authorization")String authorization) {
+    public Page<PrizeRecord> findByPage(@RequestParam Integer start, @RequestParam Integer size) {
         return prizeRecordService.findByPage(start, size);
     }
 
     @GetMapping()
     @ApiOperation(value = "获取所有奖品信息", notes = "获取所有奖品信息")
-    public List<PrizeRecord> findAll(@RequestHeader("Authorization")String authorization) {
+    public List<PrizeRecord> findAll() {
         return prizeRecordService.listAll();
     }
 
     @GetMapping("/{id}")
     @ApiOperation(value = "根据ID，获取奖品信息", notes = "根据ID，获取奖品信息")
-    public PrizeRecord findById(@PathVariable Integer id,@RequestHeader("Authorization")String authorization) {
+    public PrizeRecord findById(@PathVariable Integer id) {
         return prizeRecordService.get(id);
     }
 
     @GetMapping("/name")
-    @ApiOperation(value = "根据姓名,获取奖品信息", notes = "根据姓名,获取奖品信息")
-    public List<PrizeRecord> findByName(@RequestParam String name,@RequestHeader("Authorization")String authorization) {
-        System.out.println(name);
-        return prizeRecordService.findByName(name);
+    @ApiOperation(value = "根据姓名，分页查询", notes = "根据姓名，分页查询")
+    public Page<PrizeRecord> findByName(@RequestParam String name, @RequestParam Integer start, @RequestParam Integer size) {
+        PrizeRecord prizeRecord = new PrizeRecord();
+        Member member = new Member();
+        member.setName(name);
+        prizeRecord.setMember(member);
+        return prizeRecordService.findByMatcher(prizeRecord,"member.name",new PageRequest(start,size));
     }
 
-    @GetMapping("/status/{status}")
-    @ApiOperation(value = "根据状态,获取奖品信息", notes = "根据状态,获取奖品信息")
-    public List<PrizeRecord> findByStatus(@PathVariable Integer status,@RequestHeader("Authorization")String authorization) {
-        return prizeRecordService.findByStatus(status);
+    @GetMapping("/status")
+    @ApiOperation(value = "根据状态,分页查询", notes = "根据状态,分页查询")
+    public Page<PrizeRecord> findByStatus(@RequestParam Integer status, @RequestParam Integer start, @RequestParam Integer size) {
+        PrizeRecord prizeRecord = new PrizeRecord();
+        prizeRecord.setStatus(status);
+        return prizeRecordService.findByExample(prizeRecord,new PageRequest(start,size));
     }
 
     @PostMapping
@@ -75,7 +83,7 @@ public class AdminLuckyDrawController {
             return "false";
     }
 
-    @DeleteMapping
+    @DeleteMapping("{id}")
     @ApiOperation(value = "删除", notes = "根据id,删除奖品记录")
     public String delete(@PathVariable Integer id,@RequestHeader("Authorization")String authorization) {
         prizeRecordService.delete(id);

@@ -1,11 +1,12 @@
 package com.cs.wechat.security.service;
 
 import com.cs.wechat.security.repository.UserRepository;
-import com.cs.wechat.domain.dto.PwdInfo;
+import com.cs.wechat.domain.vo.PwdInfo;
 import com.cs.wechat.domain.entity.User;
 import com.cs.wechat.utils.EncodePwdUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -69,6 +70,16 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public Page<User> findByPage(Integer start, Integer size) {
+        return null;
+    }
+
+    @Override
+    public Page<User> findByExample(User user, PageRequest pageRequest) {
+        return null;
+    }
+
+    @Override
+    public Page<User> findByMatcher(User user, String name, PageRequest pageRequest) {
         return null;
     }
 

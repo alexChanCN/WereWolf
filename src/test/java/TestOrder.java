@@ -1,6 +1,6 @@
 import com.cs.wechat.WxMpDemoApplication;
-import com.cs.wechat.domain.dto.OrderRequest;
-import com.cs.wechat.domain.dto.RoomRequest;
+import com.cs.wechat.domain.vo.OrderRequest;
+import com.cs.wechat.domain.vo.RoomRequest;
 import com.cs.wechat.domain.model.OrderRecord;
 import com.cs.wechat.domain.model.Room;
 import com.cs.wechat.repository.OrderRepository;
@@ -11,6 +11,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Date;
@@ -36,23 +37,7 @@ public class TestOrder {
 
     }
 
-    @Test
-    public void testUpdate(){
-        orderService.confirm(1l,"xxx");
-    }
 
-    @Test
-    public void  testFind(){
-        //SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        //Date date = dateFormat.format(new Date());
-        Date date = new Date();
-        Room room = new Room();
-        room.setId(1);
-        List<OrderRecord> orderInfos = repository.findByDateAndRoomAndPhase(date,room,1);
-
-        System.out.println(JsonUtils.toJson(orderInfos));
-        //orderInfos.forEach(System.out::println);
-    }
 
     @Test
     public void findByOpenId(){
@@ -63,8 +48,9 @@ public class TestOrder {
 
     @Test
     public void  testFind1(){
-        OrderRecord orderRecord = repository.findOne(1l);
-        orderRecord.setClerkName("fsdfsdf");
+        OrderRecord orderRecord = repository.findOne(129l);
+        orderRecord.setClerkName("wwxx");
+        orderRecord.setStatus(2);
         repository.save(orderRecord);
     }
     @Test

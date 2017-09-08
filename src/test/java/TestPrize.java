@@ -13,7 +13,10 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * Created by cs on 2017/8/18.
@@ -63,15 +66,25 @@ public class TestPrize {
         }
     }
 
-    @Test
-    public void testFind3() {
-        List<PrizeRecord> prizeRecords = prizeRecordService.findByName("张三");
-        System.out.println(JsonUtils.toJson(prizeRecords));
-    }
 
     @Test
     public void testFind4() {
         System.out.println(prizeRecordService.get(1));
     }
+
+    @Test
+    public void save(){
+        PrizeRecord prizeRecord = new PrizeRecord();
+        prizeRecord.setStatus(1);
+        recordRepository.save(prizeRecord);
+    }
+
+    @Test
+    public void update(){
+        PrizeRecord prizeRecord = recordRepository.findOne(188);
+        prizeRecord.setStatus(2);
+        recordRepository.save(prizeRecord);
+    }
+
 
 }

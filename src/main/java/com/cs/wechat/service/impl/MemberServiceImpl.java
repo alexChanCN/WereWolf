@@ -1,22 +1,26 @@
 package com.cs.wechat.service.impl;
 
 import com.cs.wechat.core.BaseServiceImpl;
-import com.cs.wechat.domain.dto.RegisterInfo;
+import com.cs.wechat.domain.vo.RegisterInfo;
 import com.cs.wechat.domain.model.Member;
 import com.cs.wechat.repository.MemberRepository;
 import com.cs.wechat.repository.SubscriberRepository;
 import com.cs.wechat.service.MemberService;
+import com.cs.wechat.utils.JsonUtils;
 import com.github.binarywang.java.emoji.EmojiConverter;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.result.WxMpUser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
-import java.util.List;
+
+import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.startsWith;
 
 /**
  * Created by cs on 2017/8/4.
@@ -89,5 +93,7 @@ public class MemberServiceImpl extends BaseServiceImpl<Member,Integer> implement
     public Member findByOpenId(String openId) {
         return memberRepository.findByOpenId(openId);
     }
+
+
 
 }

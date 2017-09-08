@@ -1,12 +1,25 @@
+import com.cs.wechat.WxMpDemoApplication;
+import com.cs.wechat.security.JwtTokenUtil;
+import com.cs.wechat.utils.ExportExcel;
 import com.github.binarywang.java.emoji.EmojiConverter;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+
+import javax.servlet.ServletException;
+import java.io.IOException;
 
 /**
  * Created by cs on 2017/8/28.
  */
+
 public class TestEmoji {
     private EmojiConverter emojiConverter = EmojiConverter.getInstance();
+
+    private ExportExcel exportExcel = new ExportExcel();
 
     @Test
     public void testToAlias() {
@@ -40,6 +53,11 @@ public class TestEmoji {
         System.err.println("EmojiConverterTest.testToUnicode()=====>");
         System.err.println(result);
         Assert.assertEquals("🙅 🙆 💑 😃 😀 😉", result);
+    }
+
+    @Test
+    public void testOut(){
+        exportExcel.Export();
     }
 
 }

@@ -1,5 +1,5 @@
 import com.cs.wechat.WxMpDemoApplication;
-import com.cs.wechat.domain.dto.CommentInfo;
+import com.cs.wechat.domain.vo.CommentInfo;
 import com.cs.wechat.service.CommentService;
 import org.junit.Test;
 import org.junit.runner.RunWith;

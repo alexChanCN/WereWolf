@@ -4,6 +4,7 @@ import com.cs.wechat.core.BaseRepository;
 import com.cs.wechat.domain.model.Member;
 import com.cs.wechat.domain.model.OrderRecord;
 import com.cs.wechat.domain.model.Room;
+import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

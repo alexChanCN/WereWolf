@@ -1,4 +1,4 @@
-package com.cs.wechat.domain.dto;
+package com.cs.wechat.domain.vo;
 
 import lombok.Data;
 

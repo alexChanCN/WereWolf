@@ -1,22 +1,23 @@
 package com.cs.wechat.service.impl;
 
 import com.cs.wechat.core.BaseServiceImpl;
-import com.cs.wechat.domain.dto.OrderRequest;
-import com.cs.wechat.domain.dto.RoomRequest;
+import com.cs.wechat.domain.vo.OrderRequest;
+import com.cs.wechat.domain.vo.RoomRequest;
 import com.cs.wechat.domain.model.Member;
 import com.cs.wechat.repository.OrderRepository;
 import com.cs.wechat.service.ChanceService;
 import com.cs.wechat.service.MemberService;
-import com.cs.wechat.domain.dto.SeatRequest;
+import com.cs.wechat.domain.vo.SeatRequest;
 import com.cs.wechat.domain.model.OrderRecord;
 import com.cs.wechat.domain.model.Room;
 import com.cs.wechat.service.OrderService;
 import com.cs.wechat.service.RoomService;
 import com.cs.wechat.utils.DateUtils;
+import me.chanjar.weixin.common.exception.WxErrorException;
+import me.chanjar.weixin.mp.api.WxMpService;
+import me.chanjar.weixin.mp.bean.kefu.WxMpKefuMessage;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
-import org.springframework.data.domain.Page;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -36,9 +37,10 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderRecord, Long> impleme
     MemberService memberService;
     @Autowired
     RoomService roomService;
-
     @Autowired
     ChanceService chanceService;
+    @Autowired
+    WxMpService wxMpService;
 
 
     @Override
@@ -74,7 +76,7 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderRecord, Long> impleme
     }
 
     @Override
-    public Integer confirm(Long id, String clerkName) {
+    public Integer confirm(Long id, String clerkName) throws WxErrorException {
         OrderRecord orderInfo = orderRepository.findOne(id);
         orderInfo.setStatus(CONFIRM);
         orderInfo.setClerkName(clerkName);
@@ -82,12 +84,14 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderRecord, Long> impleme
         orderRepository.save(orderInfo);
 
         String openId = orderInfo.getMember().getOpenId();
-        //Integer roomId = orderInfo.getRoom().getId();
-        //Integer seatId = orderInfo.getSeat().getId();
-        //roomService.changeStatus(roomId,3);
-        //seatService.changeStatus(seatId,3);
         chanceService.add(openId, SIGN_IN);
         memberService.changeChance(openId, SIGN_IN);
+        WxMpKefuMessage message = WxMpKefuMessage
+                .TEXT()
+                .toUser(orderInfo.getMember().getOpenId())
+                .content("恭喜预订成功")
+                .build();
+        wxMpService.getKefuService().sendKefuMessage(message);
         return 1;
     }
 
@@ -154,6 +158,14 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderRecord, Long> impleme
         } else
             return false;
 
+    }
+
+    @Override
+    public Page<OrderRecord> findAllDesc(Integer start,Integer size) {
+        OrderRecord orderRecord = new OrderRecord();
+        orderRecord.setStatus(1);
+        Sort sort = new Sort(Sort.Direction.DESC, "id");
+        return orderRepository.findAll(Example.of(orderRecord),new PageRequest(start,size,sort));
     }
 
 

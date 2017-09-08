@@ -2,14 +2,13 @@ package com.cs.wechat.service.impl;
 
 import com.cs.wechat.core.BaseServiceImpl;
 import com.cs.wechat.repository.RoomRepository;
-import com.cs.wechat.domain.dto.RoomRequest;
-import com.cs.wechat.domain.dto.RoomStatus;
+import com.cs.wechat.domain.vo.RoomRequest;
+import com.cs.wechat.domain.vo.RoomStatus;
 import com.cs.wechat.domain.model.OrderRecord;
 import com.cs.wechat.domain.model.Room;
 import com.cs.wechat.service.OrderService;
 import com.cs.wechat.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

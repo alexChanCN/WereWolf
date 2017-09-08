@@ -22,9 +22,9 @@ public class OrderRecord implements Serializable{
     @Id
     @GeneratedValue
     private Long id;
-    @Temporal(TemporalType.TIMESTAMP)
+
     private Date createTime;
-    @Temporal(TemporalType.TIMESTAMP)
+
     private Date updateTime;
 
     @ManyToOne

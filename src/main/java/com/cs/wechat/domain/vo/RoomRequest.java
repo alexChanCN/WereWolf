@@ -1,10 +1,8 @@
-package com.cs.wechat.domain.dto;
+package com.cs.wechat.domain.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.Date;
 
 /**
  * Created by cs on 2017/8/10.

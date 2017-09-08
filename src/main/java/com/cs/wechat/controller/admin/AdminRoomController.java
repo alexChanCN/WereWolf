@@ -24,19 +24,19 @@ public class AdminRoomController {
 
     @GetMapping("/page")
     @ApiOperation(value="分页获取房间信息", notes="分页获取房间信息")
-    public Page<Room> findByPage(@RequestHeader("Authorization")String authorization,@RequestParam Integer start, @RequestParam Integer size){
+    public Page<Room> findByPage(@RequestParam Integer start, @RequestParam Integer size){
         return roomService.findByPage(start, size);
     }
 
     @GetMapping()
     @ApiOperation(value="获取所有房间信息", notes="获取所有房间信息")
-    public List<Room> findAll(@RequestHeader("Authorization")String authorization){
+    public List<Room> findAll(){
         return roomService.listAll();
     }
 
     @GetMapping("/{id}")
     @ApiOperation(value="根据id，获取该房间信息", notes="根据id，获取该房间信息")
-    public Room getOne(@RequestHeader("Authorization")String authorization,@PathVariable Integer id){
+    public Room getOne(@PathVariable Integer id){
         return roomService.get(id);
     }
 
@@ -55,7 +55,7 @@ public class AdminRoomController {
     }
 
 
-    @DeleteMapping
+    @DeleteMapping("{id}")
     @ApiOperation(value="删除", notes="根据id,删除教练信息")
     public String delete(@RequestHeader("Authorization")String authorization,@PathVariable Integer id){
         roomService.delete(id);

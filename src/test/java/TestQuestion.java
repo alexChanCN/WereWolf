@@ -1,5 +1,5 @@
 import com.cs.wechat.WxMpDemoApplication;
-import com.cs.wechat.domain.dto.QuestionInfo;
+import com.cs.wechat.domain.vo.QuestionInfo;
 import com.cs.wechat.domain.model.Question;
 import com.cs.wechat.repository.AnswerRecordRepository;
 import com.cs.wechat.service.AnswerRecordService;

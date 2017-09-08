@@ -1,6 +1,6 @@
 package com.cs.wechat.controller.user;
 
-import com.cs.wechat.domain.dto.PrizeInfo;
+import com.cs.wechat.domain.vo.PrizeInfo;
 import com.cs.wechat.domain.model.Prize;
 import com.cs.wechat.domain.model.PrizeRecord;
 import com.cs.wechat.service.MemberService;
@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.OutputStream;
 import java.util.List;
 
 /**
@@ -73,4 +74,5 @@ public class LuckyDrawController {
         prizes.remove(0);
         return prizes;
     }
+
 }

@@ -1,6 +1,6 @@
 package com.cs.wechat.controller.user;
 
-import com.cs.wechat.domain.dto.OrderRequest;
+import com.cs.wechat.domain.vo.OrderRequest;
 import com.cs.wechat.domain.model.OrderRecord;
 import com.cs.wechat.service.OrderService;
 import io.swagger.annotations.Api;

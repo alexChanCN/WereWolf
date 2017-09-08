@@ -1,6 +1,6 @@
 package com.cs.wechat.controller.user;
 
-import com.cs.wechat.domain.dto.CommentInfo;
+import com.cs.wechat.domain.vo.CommentInfo;
 import com.cs.wechat.service.CommentService;
 import com.cs.wechat.domain.model.Comment;
 import io.swagger.annotations.Api;
