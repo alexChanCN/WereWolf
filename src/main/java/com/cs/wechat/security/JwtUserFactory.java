@@ -1,7 +1,7 @@
 package com.cs.wechat.security;
 
-import com.cs.wechat.domain.entity.Authority;
-import com.cs.wechat.domain.entity.User;
+import com.cs.wechat.security.entity.Authority;
+import com.cs.wechat.security.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 

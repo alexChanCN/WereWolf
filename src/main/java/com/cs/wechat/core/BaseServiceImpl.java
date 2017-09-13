@@ -1,5 +1,4 @@
 package com.cs.wechat.core;
-import com.cs.wechat.domain.model.PrizeRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
@@ -7,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
 import java.io.Serializable;
+import java.lang.reflect.Field;
 import java.util.List;
 
 import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.startsWith;
@@ -22,18 +22,34 @@ public abstract class BaseServiceImpl<T,ID extends Serializable> implements Base
 
     @Override
     public ID save(T model) {
-        baseRepository.save(model);
+        T t = baseRepository.save(model);
+        /*
+        反射获取泛型的第一个id
+         */
+        Field[] fields = t.getClass().getDeclaredFields();
+        for (Field f : fields) {
+            f.setAccessible(true);
+        }
+        try {
+            return (ID)fields[0].get(t);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
     @Override
     public void saveOrUpdate(T model) {
-
     }
 
     @Override
-    public void update(T model) {
-        baseRepository.save(model);
+    public void save(Iterable<T> ms) {
+        baseRepository.save(ms);
+    }
+
+    @Override
+    public T update(T model) {
+        return baseRepository.save(model);
     }
 
     @Override
@@ -100,4 +116,5 @@ public abstract class BaseServiceImpl<T,ID extends Serializable> implements Base
     public void clear() {
         baseRepository.deleteAll();
     }
+
 }

@@ -1,7 +1,7 @@
 package com.cs.wechat.security.controller;
 
-import com.cs.wechat.domain.vo.PwdInfo;
-import com.cs.wechat.domain.entity.User;
+import com.cs.wechat.pojo.dto.PwdInfo;
+import com.cs.wechat.security.entity.User;
 import com.cs.wechat.security.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -37,8 +37,8 @@ public class MethodProtectedRestController {
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public String add(@RequestBody User user) {
-        userService.save(user);
+    public String add(@RequestBody User user) throws IllegalAccessException, ClassNotFoundException, InstantiationException {
+        //userService.save(user);
         return "success";
     }
 

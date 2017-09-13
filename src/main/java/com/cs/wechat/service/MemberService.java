@@ -1,9 +1,8 @@
 package com.cs.wechat.service;
 
 import com.cs.wechat.core.BaseService;
-import com.cs.wechat.domain.vo.RegisterInfo;
-import com.cs.wechat.domain.model.Member;
-import org.springframework.data.domain.Page;
+import com.cs.wechat.pojo.dto.RegisterInfo;
+import com.cs.wechat.domain.entity.Member;
 
 /**
  * Created by cs on 2017/8/4.

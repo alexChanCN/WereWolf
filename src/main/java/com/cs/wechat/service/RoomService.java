@@ -1,9 +1,8 @@
 package com.cs.wechat.service;
 
 import com.cs.wechat.core.BaseService;
-import com.cs.wechat.domain.vo.RoomRequest;
-import com.cs.wechat.domain.vo.RoomStatus;
-import com.cs.wechat.domain.model.Room;
+import com.cs.wechat.pojo.vo.RoomStatus;
+import com.cs.wechat.domain.entity.Room;
 
 import java.util.List;
 
@@ -12,10 +11,7 @@ import java.util.List;
  */
 public interface RoomService extends BaseService<Room,Integer> {
 
-    Integer getIntegrityCount();
-    Integer getScatterCount();
-    Integer getAllCount();
-    List<RoomStatus> getAllStatus(RoomRequest roomRequest);
+    List<RoomStatus> getAllStatus(String date, Integer phase, Integer type);
 
 
 

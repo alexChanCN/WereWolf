@@ -1,17 +1,12 @@
 package com.cs.wechat.service.impl;
 
 import com.cs.wechat.core.BaseServiceImpl;
-import com.cs.wechat.domain.vo.OrderRequest;
-import com.cs.wechat.domain.vo.RoomRequest;
-import com.cs.wechat.domain.model.Member;
-import com.cs.wechat.repository.OrderRepository;
-import com.cs.wechat.service.ChanceService;
-import com.cs.wechat.service.MemberService;
-import com.cs.wechat.domain.vo.SeatRequest;
-import com.cs.wechat.domain.model.OrderRecord;
-import com.cs.wechat.domain.model.Room;
-import com.cs.wechat.service.OrderService;
-import com.cs.wechat.service.RoomService;
+import com.cs.wechat.service.*;
+import com.cs.wechat.pojo.dto.OrderRequest;
+import com.cs.wechat.domain.entity.Member;
+import com.cs.wechat.domain.repository.OrderRepository;
+import com.cs.wechat.domain.entity.OrderRecord;
+import com.cs.wechat.domain.entity.Room;
 import com.cs.wechat.utils.DateUtils;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpService;
@@ -41,19 +36,22 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderRecord, Long> impleme
     ChanceService chanceService;
     @Autowired
     WxMpService wxMpService;
+    @Autowired
+    PriceService priceService;
 
 
     @Override
     public Integer reserve(OrderRequest request) {
-        SeatRequest seatRequest = new SeatRequest();
-        seatRequest.setDate(request.getDate());
-        seatRequest.setPhase(request.getPhase());
-        seatRequest.setRoomId(request.getRoomId());
-        List<OrderRecord> orderRecords = findSeats(seatRequest);
+        String date = request.getDate();
+        Integer phase = request.getPhase();
+        Integer roomId = request.getRoomId();
+
+        List<OrderRecord> orderRecords = findSeats(date,phase,roomId);
         Integer current = orderRecords.size();
-        Integer total = roomService.get(request.getRoomId()).getSeatCount();
+        Integer total = roomService.get(roomId).getSeatCount();
+
+        float price = priceService.findOnePrice(date,phase,roomId);
         if (current < total) {
-            Integer roomId = request.getRoomId();
             String openId = request.getOpenId();
             Member member = memberService.findByOpenId(openId);
             //System.out.println(member);
@@ -66,6 +64,7 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderRecord, Long> impleme
             record.setNumber(request.getNumber());
             record.setRoom(room);
             record.setPhase(request.getPhase());
+            record.setPrice(price);
             record.setStatus(RESERVE);
             record.setType(request.getType());
             record.setCreateTime(new Date());
@@ -115,13 +114,13 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderRecord, Long> impleme
     }
 
     @Override
-    public List<OrderRecord> findByRequest(RoomRequest roomRequest) {
+    public List<OrderRecord> findByRequest(String date, Integer phase, Integer type) {
         OrderRecord orderRecord = new OrderRecord();
         Room room = new Room();
-        room.setType(roomRequest.getType());
+        room.setType(type);
         orderRecord.setRoom(room);
-        orderRecord.setDate(DateUtils.string2Date(roomRequest.getDate()));
-        orderRecord.setPhase(roomRequest.getPhase());
+        orderRecord.setDate(DateUtils.string2Date(date));
+        orderRecord.setPhase(phase);
 
         //创建匹配器，即如何使用查询条件
         ExampleMatcher matcher = ExampleMatcher.matching(); //构建对象
@@ -134,13 +133,11 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderRecord, Long> impleme
     }
 
     @Override
-    public List<OrderRecord> findSeats(SeatRequest seatRequest) {
-        Date date = DateUtils.string2Date(seatRequest.getDate());
-        Integer id = seatRequest.getRoomId();
+    public List<OrderRecord> findSeats(String date, Integer roomId, Integer phase) {
+        Date datetime = DateUtils.string2Date(date);
         Room room = new Room();
-        room.setId(id);
-        Integer phase = seatRequest.getPhase();
-        return orderRepository.findByDateAndRoomAndPhase(date, room, phase);
+        room.setId(roomId);
+        return orderRepository.findByDateAndRoomAndPhase(datetime, room, phase);
     }
 
     @Override

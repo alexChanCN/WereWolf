@@ -1,11 +1,10 @@
 package com.cs.wechat.service.impl;
 
 import com.cs.wechat.core.BaseServiceImpl;
-import com.cs.wechat.domain.model.Chance;
-import com.cs.wechat.repository.ChanceRepository;
+import com.cs.wechat.domain.entity.Chance;
+import com.cs.wechat.domain.repository.ChanceRepository;
 import com.cs.wechat.service.ChanceService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;

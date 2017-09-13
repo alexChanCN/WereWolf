@@ -1,6 +1,6 @@
 package com.cs.wechat.utils;
 
-import com.cs.wechat.domain.model.Room;
+import com.cs.wechat.domain.entity.Room;
 
 /**
  * Created by cs on 2017/8/10.

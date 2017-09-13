@@ -1,10 +1,10 @@
 package com.cs.wechat.service.impl;
 
 import com.cs.wechat.core.BaseServiceImpl;
-import com.cs.wechat.domain.vo.CommentInfo;
-import com.cs.wechat.domain.model.Comment;
-import com.cs.wechat.domain.model.Teacher;
-import com.cs.wechat.repository.CommentRepository;
+import com.cs.wechat.pojo.dto.CommentInfo;
+import com.cs.wechat.domain.entity.Comment;
+import com.cs.wechat.domain.entity.Teacher;
+import com.cs.wechat.domain.repository.CommentRepository;
 import com.cs.wechat.service.CommentService;
 import com.cs.wechat.service.MemberService;
 import com.cs.wechat.service.TeacherService;

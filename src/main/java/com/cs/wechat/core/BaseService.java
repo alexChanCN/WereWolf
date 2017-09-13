@@ -1,10 +1,9 @@
 package com.cs.wechat.core;
 
-import com.cs.wechat.domain.model.PrizeRecord;
-import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -18,8 +17,11 @@ public interface BaseService<M,ID>{
         //保存或者更新方法
         public void saveOrUpdate(M model);
 
+        //
+        public void save(Iterable<M> ms);
+
         //更新方法
-        public void update(M model);
+        public M update(M model);
 
         //混合方法
         public void merge(M model);

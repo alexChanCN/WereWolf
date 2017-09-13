@@ -9,7 +9,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 //下面是和数据导出有关的包
-import com.cs.wechat.domain.vo.Student;
+import com.cs.wechat.pojo.vo.Student;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFRow;

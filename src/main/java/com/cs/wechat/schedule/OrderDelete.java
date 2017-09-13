@@ -1,14 +1,9 @@
 package com.cs.wechat.schedule;
 
-import com.cs.wechat.domain.model.OrderRecord;
 import com.cs.wechat.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
-import java.util.List;
-import static com.cs.wechat.core.ProjectConstant.SCHEDULE_TIME;
 /**
  * Created by cs on 2017/8/31.
  */

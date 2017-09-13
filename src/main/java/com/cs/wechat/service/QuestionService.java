@@ -2,8 +2,8 @@ package com.cs.wechat.service;
 
 
 import com.cs.wechat.core.BaseService;
-import com.cs.wechat.domain.vo.QuestionInfo;
-import com.cs.wechat.domain.model.Question;
+import com.cs.wechat.pojo.vo.QuestionInfo;
+import com.cs.wechat.domain.entity.Question;
 
 /**
  * Created by cs on 2017/8/4.

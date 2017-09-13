@@ -1,7 +1,7 @@
 package com.cs.wechat.service;
 
 import com.cs.wechat.core.BaseService;
-import com.cs.wechat.domain.model.AnswerRecord;
+import com.cs.wechat.domain.entity.AnswerRecord;
 
 /**
  * Created by cs on 2017/8/27.

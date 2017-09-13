@@ -1,7 +1,7 @@
 package com.cs.wechat.security.service;
 
 import com.cs.wechat.security.repository.UserRepository;
-import com.cs.wechat.domain.entity.User;
+import com.cs.wechat.security.entity.User;
 import com.cs.wechat.security.JwtUserFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

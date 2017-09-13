@@ -1,7 +1,6 @@
 package com.cs.wechat.handler;
 
 import com.cs.wechat.builder.TextBuilder;
-import com.cs.wechat.repository.SubscriberRepository;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.mp.api.WxMpService;
@@ -18,8 +17,7 @@ import java.util.Map;
  */
 @Component
 public class SubscribeHandler extends AbstractHandler {
-    @Autowired
-    SubscriberRepository subscriberRepository;
+
     @Override
     public WxMpXmlOutMessage handle(WxMpXmlMessage wxMessage,
                                     Map<String, Object> context, WxMpService weixinService,

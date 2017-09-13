@@ -1,9 +1,9 @@
 package com.cs.wechat.service.impl;
 
 import com.cs.wechat.core.BaseServiceImpl;
-import com.cs.wechat.domain.vo.QuestionInfo;
-import com.cs.wechat.domain.model.Question;
-import com.cs.wechat.repository.QuestionRepository;
+import com.cs.wechat.pojo.vo.QuestionInfo;
+import com.cs.wechat.domain.entity.Question;
+import com.cs.wechat.domain.repository.QuestionRepository;
 import com.cs.wechat.service.QuestionService;
 import com.cs.wechat.utils.QuestionUtils;
 import org.springframework.beans.factory.annotation.Autowired;

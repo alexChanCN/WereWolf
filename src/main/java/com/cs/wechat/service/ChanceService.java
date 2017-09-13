@@ -1,7 +1,7 @@
 package com.cs.wechat.service;
 
 import com.cs.wechat.core.BaseService;
-import com.cs.wechat.domain.model.Chance;
+import com.cs.wechat.domain.entity.Chance;
 
 import java.util.List;
 
